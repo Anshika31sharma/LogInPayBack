@@ -1,24 +1,5 @@
 import React, { useState } from 'react';
-const ReimbursementList = ({ reimbursements }) => {
-  return (
-    <div>
-      
-      <ul>
-        {reimbursements.map((reimbursement, index) => (
-          <li key={index}>
-            <div>
-              <strong>Date:</strong> {reimbursement.date}
-            </div>
-            <div>
-              <strong>Amount:</strong> {reimbursement.amount}
-            </div>
-            <hr />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+
 const reimbursementData = [
   { date: '2022-01-01', amount: '$100', paymentType: 'Credit', outOfPocketExpense: ['meal'], raisedBy: 'Employee1', remarks: 'Lorem ipsum' },
   { date: '2022-01-02', amount: '$150', paymentType: 'Cash', outOfPocketExpense: ['meal', 'other'], raisedBy: 'Employee2', remarks: 'Dolor sit amet' },
@@ -85,7 +66,7 @@ const App = () => {
     remarks: '',
   });
 
-  const [userRole, setUserRole] = useState('employee');
+  
   const [showReimbursementForm, setShowReimbursementForm] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
   const [reimbursements, setReimbursements] = useState([]);
@@ -126,19 +107,17 @@ const App = () => {
   };
 
   const switchToUser = () => {
-    setUserRole('employee');
     setShowReimbursementForm(true);
     setShowSignUpForm(false);
   };
 
   const switchToAdmin = () => {
-    setUserRole('admin');
+   
     setShowReimbursementForm(false);
     setShowSignUpForm(false);
   };
 
   const switchToSignUp = () => {
-    setUserRole('admin');
     setShowReimbursementForm(false);
     setShowSignUpForm(true);
   };
