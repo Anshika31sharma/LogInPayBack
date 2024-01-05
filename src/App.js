@@ -1,6 +1,61 @@
-// App.js
 import React, { useState } from 'react';
-import ReimbursementList from './reimber';
+const ReimbursementList = ({ reimbursements }) => {
+  return (
+    <div>
+      
+      <ul>
+        {reimbursements.map((reimbursement, index) => (
+          <li key={index}>
+            <div>
+              <strong>Date:</strong> {reimbursement.date}
+            </div>
+            <div>
+              <strong>Amount:</strong> {reimbursement.amount}
+            </div>
+            <hr />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+const reimbursementData = [
+  { date: '2022-01-01', amount: '$100', paymentType: 'Credit', outOfPocketExpense: ['meal'], raisedBy: 'Employee1', remarks: 'Lorem ipsum' },
+  { date: '2022-01-02', amount: '$150', paymentType: 'Cash', outOfPocketExpense: ['meal', 'other'], raisedBy: 'Employee2', remarks: 'Dolor sit amet' },
+  { date: '2022-01-03', amount: '$50', paymentType: 'Credit', outOfPocketExpense: ['meal'], raisedBy: 'Employee3', remarks: 'Lorem ipsum' },
+  { date: '2022-01-04', amount: '$200', paymentType: 'Debit', outOfPocketExpense: ['meal', 'other'], raisedBy: 'Employee4', remarks: 'Dolor sit amet' },
+ 
+];
+const SignUpForm = ({ handleSignUp, handleInputChange }) => {
+  return (
+    <div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Payment Type</th>
+            <th>Out of Pocket Expense</th>
+            <th>Raised By</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reimbursementData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.date}</td>
+              <td>{item.amount}</td>
+              <td>{item.paymentType}</td>
+              <td>{item.outOfPocketExpense.join(', ')}</td>
+              <td>{item.raisedBy}</td>
+              <td>{item.remarks}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 const App = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +67,11 @@ const App = () => {
     other: '',
     raisedBy: '',
     remarks: '',
+  });
+
+  const [signUpData, setSignUpData] = useState({
+    username: '',
+    password: '',
   });
 
   const [errors, setErrors] = useState({
@@ -27,6 +87,8 @@ const App = () => {
 
   const [userRole, setUserRole] = useState('employee');
   const [showReimbursementForm, setShowReimbursementForm] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [reimbursements, setReimbursements] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -54,32 +116,68 @@ const App = () => {
     });
   };
 
+  const handleSignUpInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setSignUpData({
+      ...signUpData,
+      [name]: value,
+    });
+  };
+
   const switchToUser = () => {
     setUserRole('employee');
     setShowReimbursementForm(true);
+    setShowSignUpForm(false);
   };
 
   const switchToAdmin = () => {
     setUserRole('admin');
-    setShowReimbursementForm(false); 
-    
+    setShowReimbursementForm(false);
+    setShowSignUpForm(false);
+  };
+
+  const switchToSignUp = () => {
+    setUserRole('admin');
+    setShowReimbursementForm(false);
+    setShowSignUpForm(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add your logic for handling form submission here
+    setReimbursements([...reimbursements, formData]);
+    setFormData({
+      date: '',
+      amount: '',
+      paymentType: '',
+      outOfPocketExpense: [],
+      materialTransportation: '',
+      other: '',
+      raisedBy: '',
+      remarks: '',
+    });
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    // Add logic for handling sign-up data
+   
+    // Clear the form after submission
+    setSignUpData({
+      username: '',
+      password: '',
+    });
   };
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
       <div className="bg-white p-4 rounded shadow w-50">
         <h2 className="text-2xl font-semibold mb-4">
-          {showReimbursementForm ? 'Reimbursement Form' : 'Login Form'}
+          {showReimbursementForm ? 'Reimbursement Form' : showSignUpForm ? 'Reimbursement List' : 'Login Form'}
         </h2>
         {showReimbursementForm ? (
           <form onSubmit={handleSubmit}>
-           <div className="mb-3">
+            <div className="mb-3">
               <label htmlFor="date" className="form-label">
                 Date
               </label>
@@ -220,9 +318,11 @@ const App = () => {
               Submit Reimbursement
             </button>
           </form>
+        ) : showSignUpForm ? (
+          <SignUpForm handleSignUp={handleSignUp} handleInputChange={handleSignUpInputChange} />
         ) : (
           <form onSubmit={handleSubmit}>
-             <div className="mb-3">
+            <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
@@ -254,20 +354,18 @@ const App = () => {
               Log in
             </button>
           </form>
-          
         )}
-        {userRole === 'admin' &&  (
-            <div>
-              <ReimbursementList />
-            </div>
-          )}
+        
+      
+        
         <div className="mt-3">
           <p>Switch user role:</p>
           <button className="btn btn-secondary me-2" onClick={switchToUser}>
             User
           </button>
-          <button className="btn btn-secondary" onClick={switchToAdmin}>
-            Admin
+          
+          <button className="btn btn-secondary" onClick={switchToSignUp}>
+           Admin
           </button>
         </div>
       </div>
