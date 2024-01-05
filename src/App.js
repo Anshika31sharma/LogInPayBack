@@ -9,7 +9,7 @@ const reimbursementData = [
 ];
 const SignUpForm = ({ handleSignUp, handleInputChange }) => {
   return (
-    <div>
+    <div className="table-responsive">
       <table className="table">
         <thead>
           <tr>
@@ -145,7 +145,7 @@ const App = () => {
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div className="bg-white p-4 rounded shadow w-50">
+    <div className="bg-white p-4 rounded shadow w-75">
         <h2 className="text-2xl font-semibold mb-4">
           {showReimbursementForm ? 'Reimbursement Form' : showSignUpForm ? 'Reimbursement List' : 'Login Form'}
         </h2>
