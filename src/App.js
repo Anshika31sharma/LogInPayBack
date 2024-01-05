@@ -134,9 +134,6 @@ const App = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    // Add logic for handling sign-up data
-   
-    // Clear the form after submission
     setSignUpData({
       username: '',
       password: '',
@@ -213,12 +210,8 @@ const App = () => {
                   />
                   Meal
                 </label>
-                {/* Add more checkboxes for other out of pocket expenses */}
-                {/* ... (similar checkboxes for other out of pocket expenses) */}
               </div>
-            </div>
-
-            {/* Conditional text field for Material Transportation */}
+             </div>
             {formData.outOfPocketExpense.includes('materialTransportation') && (
               <div className="mb-3">
                 <label htmlFor="materialTransportation" className="form-label">
@@ -237,8 +230,6 @@ const App = () => {
                 )}
               </div>
             )}
-
-            {/* Conditional text field for Other with reason */}
             {formData.outOfPocketExpense.includes('other') && (
               <div className="mb-3">
                 <label htmlFor="other" className="form-label">
@@ -268,8 +259,6 @@ const App = () => {
                 className={`form-control ${errors.raisedBy ? 'is-invalid' : ''}`}
               >
                 <option value="">Select Employee</option>
-                {/* Add options dynamically based on employee names */}
-                {/* ... (options for employee names) */}
               </select>
               {errors.raisedBy && <div className="invalid-feedback">{errors.raisedBy}</div>}
             </div>
@@ -329,9 +318,6 @@ const App = () => {
             </button>
           </form>
         )}
-        
-      
-        
         <div className="mt-3">
           <p>Switch role:</p>
           <button className="btn btn-secondary me-2" onClick={switchToUser}>
