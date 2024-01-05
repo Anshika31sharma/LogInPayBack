@@ -111,11 +111,6 @@ const App = () => {
     setShowSignUpForm(false);
   };
 
-  const switchToAdmin = () => {
-   
-    setShowReimbursementForm(false);
-    setShowSignUpForm(false);
-  };
 
   const switchToSignUp = () => {
     setShowReimbursementForm(false);
