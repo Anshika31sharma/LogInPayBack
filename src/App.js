@@ -333,9 +333,9 @@ const App = () => {
       
         
         <div className="mt-3">
-          <p>Switch user role:</p>
+          <p>Switch role:</p>
           <button className="btn btn-secondary me-2" onClick={switchToUser}>
-            User
+            Employee
           </button>
           
           <button className="btn btn-secondary" onClick={switchToSignUp}>
